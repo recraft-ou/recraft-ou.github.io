@@ -1219,8 +1219,8 @@
     $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
     $('.kable-table').children('table').addClass('pandoc-table');
   
-    // add figcaption style to pandoc-table captions
-    $('.pandoc-table>caption').addClass("figcaption");
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
   
     // initialize posts list
     if (window.init_posts_list)
@@ -1257,10 +1257,10 @@
   <!--radix_placeholder_site_in_header-->
   <style type="text/css">
   .radix-site-nav {
-    color: rgba(105, 143, 201, 0.7);
-    background-color: #D3D3D3;
+    color: rgba(105, 143, 201, 1);
+    background-color: rgba(240, 240, 240, 1);
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 400;
   }
   
   .radix-site-nav a {
@@ -1269,7 +1269,7 @@
   }
   
   .radix-site-nav a:hover {
-    color: white;
+    color: rgba(195, 131, 18, 1);
   }
   
   .radix-site-header {
@@ -1310,18 +1310,8 @@
 </div>
 <div class="nav-right">
 <a href="gallery.html">News</a>
-<div class="nav-dropdown">
-<button class="nav-dropbtn">
-About...
- 
-<span class="down-arrow">&#x25BE;</span>
-</button>
-<div class="nav-dropdown-content">
-<a href="posts/2018-10-10-recraft-ou/">About Recraft</a>
-<hr/>
+<a href="posts/2018-10-10-recraft-ou/">About</a>
 <a href="portfolio.html">Portfolio</a>
-</div>
-</div>
 <a href="https://github.com/recraft-ou">
 <i class="fab fa-github"></i>
 </a>
@@ -1344,10 +1334,18 @@ About...
 
 <div class="d-article">
 <div class="layout-chunk" data-layout="l-body">
-<p><img src="images/logo.png" width="194" class=external /></p>
+<p><img src="images/logo-index.png" width="724" class=external /></p>
 </div>
+<p>Recraft offers software consulting services in the following areas:</p>
 <ul>
-<li>Read more about <a href="posts/2018-10-10-recraft-ou/">services offered</a></li>
+<li><em><em>Recrafting existing R code</em></em> into an R package that can be distributed globally via GitHub or even through CRAN (if accepted there). Or even creating new custom R packages from scratch.</li>
+<li><em><em>Containerization or cloudification</em></em> of existing IT systems using Free and Open Source Software (FOSS) tools and techniques so it can run in a modular and portable fashion in the cloud (or locally) as Docker containers.</li>
+<li><em><em>Modernization of Traditional Applications</em></em> - aka <a href="https://goto.docker.com/MTAkit.html">MTA</a> - often involving a webification of software applications that might presently be locked-in to a particular non-FOSS OS or platform. This can mean converting a desktop application into a web application, so that it can run in the cloud, on the web (too).</li>
+<li><em><em>IaaS efforts</em></em> involving deployment, maintenance and operations of cloud based software services</li>
+</ul>
+<h1 id="more">More …</h1>
+<ul>
+<li>Read more about <a href="posts/2018-10-10-recraft-ou/">the company</a></li>
 <li>See some examples of <a href="portfolio.html">previous work</a></li>
 </ul>
 <!--radix_placeholder_article_footer-->
@@ -1364,6 +1362,9 @@ About...
 <div class="appendix-bottom"></div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
+<div class="radix-site-nav radix-site-footer">
+<p><a href="mailto:recraft@pm.me">Recraft OÜ / recraft@pm.me</a> (office at Narva mnt 5, Kesklinna linnaosa, 10117 Tallinn, Estonia)</p>
+</div>
 <!--/radix_placeholder_navigation_after_body-->
 
 </body>

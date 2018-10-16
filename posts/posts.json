@@ -1,7 +1,7 @@
 [
   {
     "path": "posts/2018-10-10-recraft-ou/",
-    "title": "About ...",
+    "title": "About Recraft",
     "description": "A short description of what services are offered by Recraft and how to get in touch.",
     "author": [
       {
@@ -12,8 +12,8 @@
     "date": "2018-10-10",
     "categories": [],
     "preview": "posts/2018-10-10-recraft-ou/recraft-ou_files/figure-html5/unnamed-chunk-1-1.png",
-    "last_modified": "2018-10-16T10:03:08+02:00",
-    "preview_width": 400,
-    "preview_height": 640
+    "last_modified": "2018-10-16T19:47:48+02:00",
+    "preview_width": 300,
+    "preview_height": 465
   }
 ]

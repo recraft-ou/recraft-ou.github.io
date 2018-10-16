@@ -1216,8 +1216,8 @@
     $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
     $('.kable-table').children('table').addClass('pandoc-table');
   
-    // add figcaption style to pandoc-table captions
-    $('.pandoc-table>caption').addClass("figcaption");
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
   
     // initialize posts list
     if (window.init_posts_list)
@@ -1254,10 +1254,10 @@
   <!--radix_placeholder_site_in_header-->
   <style type="text/css">
   .radix-site-nav {
-    color: rgba(105, 143, 201, 0.7);
-    background-color: #D3D3D3;
+    color: rgba(105, 143, 201, 1);
+    background-color: rgba(240, 240, 240, 1);
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 400;
   }
   
   .radix-site-nav a {
@@ -1266,7 +1266,7 @@
   }
   
   .radix-site-nav a:hover {
-    color: white;
+    color: rgba(195, 131, 18, 1);
   }
   
   .radix-site-header {
@@ -1307,18 +1307,8 @@
 </div>
 <div class="nav-right">
 <a href="gallery.html">News</a>
-<div class="nav-dropdown">
-<button class="nav-dropbtn">
-About...
- 
-<span class="down-arrow">&#x25BE;</span>
-</button>
-<div class="nav-dropdown-content">
-<a href="posts/2018-10-10-recraft-ou/">About Recraft</a>
-<hr/>
+<a href="posts/2018-10-10-recraft-ou/">About</a>
 <a href="portfolio.html">Portfolio</a>
-</div>
-</div>
 <a href="https://github.com/recraft-ou">
 <i class="fab fa-github"></i>
 </a>
@@ -1664,7 +1654,7 @@ function init_posts_list() {
 <img data-src="posts/2018-10-10-recraft-ou/recraft-ou_files/figure-html5/unnamed-chunk-1-1.png"/>
 </div>
 <div class="description">
-<h2>About ...</h2>
+<h2>About Recraft</h2>
 <p>A short description of what services are offered by Recraft and how to get in touch.</p>
 </div>
 </a>
@@ -1697,6 +1687,9 @@ function init_posts_list() {
 <div class="appendix-bottom"></div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
+<div class="radix-site-nav radix-site-footer">
+<p><a href="mailto:recraft@pm.me">Recraft OÜ / recraft@pm.me</a> (office at Narva mnt 5, Kesklinna linnaosa, 10117 Tallinn, Estonia)</p>
+</div>
 <!--/radix_placeholder_navigation_after_body-->
 
 </body>

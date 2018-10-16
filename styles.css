@@ -1,8 +1,8 @@
 .radix-site-nav {
-  color: rgba(105, 143, 201, 0.7);
-  background-color: #D3D3D3;
+  color: rgba(105, 143, 201, 1);
+  background-color: rgba(240, 240, 240, 1);
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .radix-site-nav a {
@@ -11,7 +11,7 @@
 }
 
 .radix-site-nav a:hover {
-  color: white;
+  color: rgba(195, 131, 18, 1);
 }
 
 .radix-site-header {

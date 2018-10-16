@@ -12,13 +12,10 @@ navbar:
   right:
     - text: "News"
       href: gallery.html
-    - text: "About..."
-      menu:
-        - text: "About Recraft"
-          href: posts/2018-10-10-recraft-ou/
-        - text: "---"
-        - text: "Portfolio"
-          href: portfolio.html
+    - text: "About"
+      href: posts/2018-10-10-recraft-ou/
+    - text: "Portfolio"
+      href: portfolio.html
     - icon: fab fa-github
       href: https://github.com/recraft-ou
     - icon: fa fa-rss

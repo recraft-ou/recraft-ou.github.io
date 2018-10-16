@@ -1,5 +1,5 @@
 ---
-title: "About ..."
+title: "About Recraft"
 description: |
   A short description of what services are offered by Recraft and how to get in touch.
 author:
@@ -14,44 +14,46 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-
-# Consulting services
-
 ```{r preview=TRUE}
 library(magick)
 
 image_append(stack = TRUE, c(
   image_read("../../images/logo.png") %>% 
-    image_crop %>% image_resize("400x") #%>% 
+    image_trim %>% image_resize("300x") #%>% 
 #    image_background("transparent") %>%
 #    image_border("transparent", "18x18"),
 #    image_read("../../images/TERC_logo_label_RGB_gray.png")
 ))
 ```
 
-Recraft is a one person limited company that offers software consulting services in the following areas: 
 
-- *Recrafting existing R code* into an R package that can be distributed globally through CRAN or via GitHub, or even creating new R packages from scratch.
-- *Containerization or cloudification* of existing IT systems using Free and Open Source Software (FOSS) tools and techniques so it can run in a modular and portable fashion in the cloud (or locally) as a Docker container.
-- *Modernization of Traditional Applications* - aka [MTA](https://goto.docker.com/MTAkit.html) - often meaning a webification of software applications that might presently be locked-in to a particular non-FOSS OS or platform. This can mean converting a desktop application into a web application, so that it can run in the cloud, on the web (too).
-- *IaaS efforts* involving deployment, maintenance and operations of cloud based software services 
+Recraft primarily works with clients in the academic sector and can help with efforts involving reproducible research methods. Mostly this means being involved in existing projects and efforts and making contributions using open science based techniques, methods and tools such as free and open source licensed software modules hosted at GitHub, Docker Hub etc.
 
-
-# Contact details
-
-If you want to get in touch to send a personal message, please [reach out via email using _recraft@pm.me_](mailto:recraft@pm.me)
-
-The postal adress is:
-
-    Narva mnt 5, Kesklinna linnaosa
-    10117 Tallinn
-    Estonia
+A project can involve doing a review or assessment of an existing system including suggestions for a cloud-friendly recrafting of existing architectures or individual system components. It can also involve implementing and testing system components. Even operations, system maintenance and systems and data migrations can be included in a project.
 
 # Trusted e-Residency Company
 
-Recraft is a European trusted e-Residency Company incorporated in Estonia; e-Residency provides access to a borderless digital nation, powered by the Republic of Estonia
+Recraft is a European trusted e-Residency Company incorporated in Estonia; e-Residency provides access to a borderless digital nation, powered by the Republic of Estonia.
 
 [![](../../images/terc.png)](https://e-resident.gov.ee/start-a-company)
 
 
+# Hire
 
+The company can be hired for a larger committment at a set price or an arrangement involving time reporting and an hourly charge can be used in smaller committments. 
+
+Contracts can be signed directly with a client or through an intermediary consultancy service provider.
+
+A limited liability company provides good flexibility. It can for example be called in as a subcontractor to larger companies in cases where standard agreements may already in place. 
+
+Please [get in touch by email](mailto:recraft@pm.m) if you want to discuss arrangements.
+
+# Contact
+
+If you want to get in touch to send a personal message, please [reach out via email using _recraft@pm.me_](mailto:recraft@pm.me)
+
+If you need to send a letter, the postal adress is:
+
+    Narva mnt 5, Kesklinna linnaosa
+    10117 Tallinn
+    Estonia

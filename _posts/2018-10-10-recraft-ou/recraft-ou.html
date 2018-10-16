@@ -19,7 +19,7 @@
  <!--/radix_placeholder_import_source-->
 
   <!--radix_placeholder_meta_tags-->
-  <title>About ...</title>
+  <title>About Recraft</title>
   
   <meta property="description" itemprop="description" content="A short description of what services are offered by Recraft and how to get in touch."/>
   
@@ -30,21 +30,21 @@
   <meta name="article:author" content="recraft@pm.me"/>
   
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="About ..."/>
+  <meta property="og:title" content="About Recraft"/>
   <meta property="og:type" content="article"/>
   <meta property="og:description" content="A short description of what services are offered by Recraft and how to get in touch."/>
   <meta property="og:locale" content="en_US"/>
   
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="About ..."/>
+  <meta property="twitter:title" content="About Recraft"/>
   <meta property="twitter:description" content="A short description of what services are offered by Recraft and how to get in touch."/>
   
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["About ..."]},{"type":"character","attributes":{},"value":["A short description of what services are offered by Recraft and how to get in touch.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["recraft@pm.me"]}]}]},{"type":"character","attributes":{},"value":["2018-10-10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["radix::radix_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["About Recraft"]},{"type":"character","attributes":{},"value":["A short description of what services are offered by Recraft and how to get in touch.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["recraft@pm.me"]}]}]},{"type":"character","attributes":{},"value":["2018-10-10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["radix::radix_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -887,8 +887,8 @@
     $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
     $('.kable-table').children('table').addClass('pandoc-table');
   
-    // add figcaption style to pandoc-table captions
-    $('.pandoc-table>caption').addClass("figcaption");
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
   
     // initialize posts list
     if (window.init_posts_list)
@@ -933,7 +933,7 @@
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"About ...","description":"A short description of what services are offered by Recraft and how to get in touch.","authors":[{"author":"recraft@pm.me","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#"}],"publishedDate":"2018-10-10T00:00:00.000+02:00","citationText":"recraft@pm.me, 2018"}
+{"title":"About Recraft","description":"A short description of what services are offered by Recraft and how to get in touch.","authors":[{"author":"recraft@pm.me","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#"}],"publishedDate":"2018-10-10T00:00:00.000+02:00","citationText":"recraft@pm.me, 2018"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -943,7 +943,7 @@
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>About …</h1>
+<h1>About Recraft</h1>
 <p>A short description of what services are offered by Recraft and how to get in touch.</p>
 </div>
 
@@ -954,27 +954,26 @@
 </div>
 
 <div class="d-article">
-<h1 id="consulting-services">Consulting services</h1>
 <div class="layout-chunk" data-layout="l-body">
-<p><img src="recraft-ou_files/figure-html5/unnamed-chunk-1-1.png" width="200" data-radix-preview=1 /></p>
+<p><img src="recraft-ou_files/figure-html5/unnamed-chunk-1-1.png" width="150" data-radix-preview=1 /></p>
 </div>
-<p>Recraft is a one person limited company that offers software consulting services in the following areas:</p>
-<ul>
-<li><em>Recrafting existing R code</em> into an R package that can be distributed globally through CRAN or via GitHub, or even creating new R packages from scratch.</li>
-<li><em>Containerization or cloudification</em> of existing IT systems using Free and Open Source Software (FOSS) tools and techniques so it can run in a modular and portable fashion in the cloud (or locally) as a Docker container.</li>
-<li><em>Modernization of Traditional Applications</em> - aka <a href="https://goto.docker.com/MTAkit.html">MTA</a> - often meaning a webification of software applications that might presently be locked-in to a particular non-FOSS OS or platform. This can mean converting a desktop application into a web application, so that it can run in the cloud, on the web (too).</li>
-<li><em>IaaS efforts</em> involving deployment, maintenance and operations of cloud based software services</li>
-</ul>
-<h1 id="contact-details">Contact details</h1>
+<p>Recraft primarily works with clients in the academic sector and can help with efforts involving reproducible research methods. Mostly this means being involved in existing projects and efforts and making contributions using open science based techniques, methods and tools such as free and open source licensed software modules hosted at GitHub, Docker Hub etc.</p>
+<p>A project can involve doing a review or assessment of an existing system including suggestions for a cloud-friendly recrafting of existing architectures or individual system components. It can also involve implementing and testing system components. Even operations, system maintenance and systems and data migrations can be included in a project.</p>
+<h1 id="trusted-e-residency-company">Trusted e-Residency Company</h1>
+<p>Recraft is a European trusted e-Residency Company incorporated in Estonia; e-Residency provides access to a borderless digital nation, powered by the Republic of Estonia.</p>
+<p><a href="https://e-resident.gov.ee/start-a-company"><img src="../../images/terc.png" /></a></p>
+<h1 id="hire">Hire</h1>
+<p>The company can be hired for a larger committment at a set price or an arrangement involving time reporting and an hourly charge can be used in smaller committments.</p>
+<p>Contracts can be signed directly with a client or through an intermediary consultancy service provider.</p>
+<p>A limited liability company provides good flexibility. It can for example be called in as a subcontractor to larger companies in cases where standard agreements may already in place.</p>
+<p>Please <a href="mailto:recraft@pm.m">get in touch by email</a> if you want to discuss arrangements.</p>
+<h1 id="contact">Contact</h1>
 <p>If you want to get in touch to send a personal message, please <a href="mailto:recraft@pm.me">reach out via email using <em>recraft@pm.me</em></a></p>
-<p>The postal adress is:</p>
+<p>If you need to send a letter, the postal adress is:</p>
 <pre><code>
 Narva mnt 5, Kesklinna linnaosa
 10117 Tallinn
 Estonia</code></pre>
-<h1 id="trusted-e-residency-company">Trusted e-Residency Company</h1>
-<p>Recraft is a European trusted e-Residency Company incorporated in Estonia; e-Residency provides access to a borderless digital nation, powered by the Republic of Estonia</p>
-<p><a href="https://e-resident.gov.ee/start-a-company"><img src="../../images/terc.png" /></a></p>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
