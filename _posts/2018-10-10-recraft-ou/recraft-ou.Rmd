@@ -19,7 +19,9 @@ library(magick)
 
 image_append(stack = TRUE, c(
   image_read("../../images/logo.png") %>% 
-    image_trim %>% image_resize("300x") #%>% 
+    image_trim %>% 
+    image_convert(format = "png", depth = 8) %>% 
+    image_resize("300x") #%>% 
 #    image_background("transparent") %>%
 #    image_border("transparent", "18x18"),
 #    image_read("../../images/TERC_logo_label_RGB_gray.png")

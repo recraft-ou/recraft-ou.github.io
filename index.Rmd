@@ -33,8 +33,3 @@ Recraft offers software consulting services in the following areas:
 - _*Containerization or cloudification*_ of existing IT systems using Free and Open Source Software (FOSS) tools and techniques so it can run in a modular and portable fashion in the cloud (or locally) as Docker containers.
 - _*Modernization of Traditional Applications*_ - aka [MTA](https://goto.docker.com/MTAkit.html) - often involving a webification of software applications that might presently be locked-in to a particular non-FOSS OS or platform. This can mean converting a desktop application into a web application, so that it can run in the cloud, on the web (too).
 - _*IaaS efforts*_ involving deployment, maintenance and operations of cloud based software services 
-
-# More ...
-
-- Read more about [the company](posts/2018-10-10-recraft-ou/)
-- See some examples of [previous work](portfolio.html)
