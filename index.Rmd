@@ -9,5 +9,21 @@ site: radix::radix_website
 knitr::opts_chunk$set(echo = FALSE)
 
 ```
-![](images/terc.png)
-![](images/logo.png)
+
+
+```{r preview=TRUE, layout = "l-body", out.extra="class=external"}
+#library(magick)
+
+# image_append(stack = TRUE, c(
+#   image_read("images/logo.png") %>% 
+#     image_crop %>% image_resize("396x") %>% 
+#     image_background("transparent") %>%
+#     image_border("transparent", "18x18"),
+#     image_read("images/terc.png")
+# ))
+
+knitr::include_graphics("images/logo.png")
+```
+
+- Read more about [services offered](recraft-ou.html)
+- See some examples of [previous work](portfolio.html)
