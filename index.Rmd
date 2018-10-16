@@ -1,0 +1,13 @@
+---
+title: "Welcome to Recraft"
+description: |
+  Recraft is a one person trusted e-Residency company that offers IT services within development and operations of software. The company can be hired to help with reconstructing, rearchitecting or restructuring an existing system.
+site: radix::radix_website
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+```
+![](images/terc.png)
+![](images/logo.png)

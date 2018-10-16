@@ -1,0 +1,57 @@
+---
+title: "About ..."
+description: |
+  A short description of what services are offered by Recraft and how to get in touch.
+author:
+  - name: recraft@pm.me
+date: 2018-10-10
+output:
+  radix::radix_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+# Consulting services
+
+```{r preview=TRUE}
+library(magick)
+
+image_append(stack = TRUE, c(
+  image_read("../../images/logo.png") %>% 
+    image_crop %>% image_resize("400x") #%>% 
+#    image_background("transparent") %>%
+#    image_border("transparent", "18x18"),
+#    image_read("../../images/TERC_logo_label_RGB_gray.png")
+))
+```
+
+Recraft is a one person limited company that offers software consulting services in the following areas: 
+
+- *Recrafting existing R code* into an R package that can be distributed globally through CRAN or via GitHub, or even creating new R packages from scratch.
+- *Containerization or cloudification* of existing IT systems using Free and Open Source Software (FOSS) tools and techniques so it can run in a modular and portable fashion in the cloud (or locally) as a Docker container.
+- *Modernization of Traditional Applications* - aka [MTA](https://goto.docker.com/MTAkit.html) - often meaning a webification of software applications that might presently be locked-in to a particular non-FOSS OS or platform. This can mean converting a desktop application into a web application, so that it can run in the cloud, on the web (too).
+- *IaaS efforts* involving deployment, maintenance and operations of cloud based software services 
+
+
+# Contact details
+
+If you want to get in touch to send a personal message, please [reach out via email using _recraft@pm.me_](mailto:recraft@pm.me)
+
+The postal adress is:
+
+    Narva mnt 5, Kesklinna linnaosa
+    10117 Tallinn
+    Estonia
+
+# Trusted e-Residency Company
+
+Recraft is a European trusted e-Residency Company incorporated in Estonia; e-Residency provides access to a borderless digital nation, powered by the Republic of Estonia
+
+[![](../../images/terc.png)](https://e-resident.gov.ee/start-a-company)
+
+
+

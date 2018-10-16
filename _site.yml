@@ -1,0 +1,32 @@
+name: "recraft-website"
+title: "Recraft"
+description: |
+  Recraft
+base_url: https://recraft-ou.github.io/
+favicon: images/favicon.png
+output_dir: "."
+navbar:
+  logo:
+    image: images/logo.png
+    href: https://recraft-ou.github.io
+  right:
+    - text: "News"
+      href: gallery.html
+    - text: "About..."
+      menu:
+        - text: "About Recraft"
+          href: recraft-ou.html
+        - text: "---"
+        - text: "Portfolio"
+          href: portfolio.html
+    - icon: fab fa-github
+      href: https://github.com/recraft-ou
+    - icon: fa fa-rss
+      href: index.xml
+output: 
+  radix::radix_article:
+    css: styles.css
+collections:
+  posts:
+    feed_items_max: false
+    citations: false

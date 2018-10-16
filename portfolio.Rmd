@@ -1,0 +1,19 @@
+---
+title: "Portfolio"
+description: |
+  Public examples of previous work
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Portfolio
+
+Recraft is active within the DevOps area of software consultancy - and might be a good partner if you are looking for specialist competency in technologies like Docker for the purpose of modernizing traditional apps to make them run in the cloud.
+
+However, Recraft has a primary focus on providing services within R software development (and/or training). Examples of earlier work with public availability at GitHub and using Free and Open Source software licenses: 
+
+- https://github.com/raquamaps
+- https://github.com/rekonstrukt
+- https://github.com/recraft-ou
