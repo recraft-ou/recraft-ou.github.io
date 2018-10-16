@@ -22,7 +22,7 @@ navbar:
     - icon: fab fa-github
       href: https://github.com/recraft-ou
     - icon: fa fa-rss
-      href: index.xml
+      href: sitemap.xml
 output: 
   radix::radix_article:
     css: styles.css
