@@ -15,7 +15,7 @@ navbar:
     - text: "About..."
       menu:
         - text: "About Recraft"
-          href: recraft-ou.html
+          href: posts/2018-10-10-recraft-ou/
         - text: "---"
         - text: "Portfolio"
           href: portfolio.html

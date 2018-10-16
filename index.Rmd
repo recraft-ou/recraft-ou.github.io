@@ -25,5 +25,5 @@ knitr::opts_chunk$set(echo = FALSE)
 knitr::include_graphics("images/logo.png")
 ```
 
-- Read more about [services offered](recraft-ou.html)
+- Read more about [services offered](posts/2018-10-10-recraft-ou/)
 - See some examples of [previous work](portfolio.html)
