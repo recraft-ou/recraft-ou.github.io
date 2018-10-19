@@ -1,6 +1,4 @@
 ---
-title: "Sticky news posts"
-listing:
-  posts:
-    - 2018-10-10-recraft-ou 
+title: "Featured content"
+listing: posts
 ---

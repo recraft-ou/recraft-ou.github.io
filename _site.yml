@@ -2,12 +2,12 @@ name: "recraft-website"
 title: "Recraft"
 description: |
   Recraft
-base_url: https://recraft-ou.github.io/
+base_url: https://recraft.me
 favicon: images/favicon.png
 output_dir: "."
 navbar:
   logo:
-    image: images/favicon.png
+    image: images/logo-small.png
     href: https://recraft-ou.github.io
   right:
     - text: "News"
@@ -18,6 +18,8 @@ navbar:
       href: portfolio.html
     - icon: fab fa-github
       href: https://github.com/recraft-ou
+    - icon: fa fa-rss
+      href: gallery.xml
 output: 
   radix::radix_article:
     css: styles.css

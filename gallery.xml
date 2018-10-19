@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+  <channel>
+    <title>Recraft</title>
+    <link>https://recraft.me</link>
+    <atom:link href="https://recraft.me/gallery.xml" rel="self" type="application/rss+xml"/>
+    <description>Recraft
+</description>
+    <image>
+      <title>Recraft</title>
+      <url>https://recraft.me/images/favicon.png</url>
+      <link>https://recraft.me</link>
+    </image>
+    <generator>Radix</generator>
+    <lastBuildDate>Tue, 09 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>About Recraft</title>
+      <dc:creator>recraft@pm.me</dc:creator>
+      <link>https://recraft.me/posts/2018-10-10-recraft-ou</link>
+      <description>A short description of what services are offered by Recraft and how to get in touch.</description>
+      <guid>https://recraft.me/posts/2018-10-10-recraft-ou</guid>
+      <pubDate>Tue, 09 Oct 2018 00:00:00 +0000</pubDate>
+      <media:content url="https://recraft.me/posts/2018-10-10-recraft-ou/recraft-ou_files/figure-html5/unnamed-chunk-1-1.png" medium="image" type="image/png" width="300" height="480"/>
+    </item>
+  </channel>
+</rss>
