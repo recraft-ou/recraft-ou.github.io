@@ -12,7 +12,16 @@
       <link>https://recraft.me</link>
     </image>
     <generator>Radix</generator>
-    <lastBuildDate>Tue, 09 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Nov 2018 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Halloween Repairs</title>
+      <dc:creator>recraft@pm.me</dc:creator>
+      <link>https://recraft.me/posts/2018-11-01-halloween</link>
+      <description>Notes from the underground</description>
+      <guid>https://recraft.me/posts/2018-11-01-halloween</guid>
+      <pubDate>Thu, 01 Nov 2018 00:00:00 +0000</pubDate>
+      <media:content url="https://recraft.me/posts/2018-11-01-halloween/index_files/figure-html5/unnamed-chunk-1-1.png" medium="image" type="image/png" width="400" height="300"/>
+    </item>
     <item>
       <title>About Recraft</title>
       <dc:creator>recraft@pm.me</dc:creator>

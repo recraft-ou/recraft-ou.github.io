@@ -1,5 +1,5 @@
 ---
-title: "Welcome to Recraft"
+title: "Let's Recraft IT!"
 description: |
   Recraft is a trusted e-Residency company that offers IT services within development and operations of software. The company can be hired to help out with reconstructing, rearchitecting or restructuring an existing system.
 site: radix::radix_website

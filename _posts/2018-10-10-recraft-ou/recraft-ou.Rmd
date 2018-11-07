@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = FALSE)
 library(magick)
 
 image_append(stack = TRUE, c(
-    image_read("../../images/recraft-badge-square.png") %>% 
+    image_read("../../images/recraft-transparent-square.png") %>% 
     image_trim %>% 
     image_convert(format = "png", depth = 8) %>% 
     image_resize("300x") #%>% 

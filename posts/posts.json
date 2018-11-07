@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2018-11-01-halloween/",
+    "title": "Halloween Repairs",
+    "description": "Notes from the underground",
+    "author": [
+      {
+        "name": "recraft@pm.me",
+        "url": {}
+      }
+    ],
+    "date": "2018-11-01",
+    "categories": [],
+    "preview": "posts/2018-11-01-halloween/index_files/figure-html5/unnamed-chunk-1-1.png",
+    "last_modified": "2018-11-07T21:18:46+01:00",
+    "preview_width": 400,
+    "preview_height": 300
+  },
+  {
     "path": "posts/2018-10-10-recraft-ou/",
     "title": "About Recraft",
     "description": "A short description of what services are offered by Recraft and how to get in touch.",
@@ -12,7 +29,7 @@
     "date": "2018-10-10",
     "categories": [],
     "preview": "posts/2018-10-10-recraft-ou/recraft-ou_files/figure-html5/unnamed-chunk-1-1.png",
-    "last_modified": "2018-10-19T10:44:22+02:00",
+    "last_modified": "2018-11-07T21:20:02+01:00",
     "preview_width": 300,
     "preview_height": 480
   }

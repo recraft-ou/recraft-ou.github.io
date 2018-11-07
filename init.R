@@ -1,7 +1,7 @@
 library(magick)
 
-image_read("images/recraft-badge-square.png") %>%
-#  image_trim %>%
+image_read("images/recraft-transparent-square.png") %>%
+  image_trim %>%
 #  image_crop("360x600+40+40") %>%
 #  image_trim %>%
 #  image_background("white") %>%
@@ -10,7 +10,7 @@ image_resize("x35") %>%
   image_write("images/logo-small.png")
 
 image_append(stack = FALSE, c(
-  image_read("images/recraft-badge-square.png") %>%
+  image_read("images/recraft-transparent-square.png") %>%
     image_resize("x300") %>% image_trim, #%>%
     #image_background("transparent") %>%
     #image_border("transparent", "18x18")
