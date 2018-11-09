@@ -7,14 +7,17 @@ author:
 date: 2018-11-01
 output:
   radix::radix_article:
-    self_contained: false
+    self_contained: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(out.width = "100%")
+knitr::opts_chunk$set(dev = "jpeg")
+
 ```
 
-```{r preview=TRUE, out.width='100%'}
+```{r preview=TRUE}
 library(magick)
 library(knitr)
 
@@ -31,7 +34,7 @@ Det är därför dags att påbörja lagningar - först och främst en syllstocks
 
 I jordkällaren trivs både källarspindlar och tidigare även myror. 
 
-```{r out.width='100%', fig.cap="Jordkällaren har ett tegeltak i behov av omläggning och ytterligare lagningar."}
+```{r fig.cap="Jordkällaren har ett tegeltak i behov av omläggning och ytterligare lagningar."}
 
 #include_graphics("~/Pictures/phonepics2018/Photo0308.jpg")
 image_read("~/Pictures/phonepics2018/Photo0308.jpg") %>%
@@ -41,17 +44,19 @@ image_read("~/Pictures/phonepics2018/Photo0308.jpg") %>%
 
 Efter en längre period med delvis trasigt yttertak har jordkällaren - som består av ett yttre skal och en inre "kammare" skiljda åt av en metertjock mur - utvecklat ett hål rakt igenom ena "väggen". Den kan inte längre hålla kylan ute, vilket blir ett problem för vattenpumpsanläggningen som inte får frysa sönder. 
 
-```{r  out.width='100%', fig.cap=" I mitten av källartaket finns en öppning för ventilationen som mynnar i en ventilhuv på tegeltaket."}
+```{r fig.cap=" I mitten av källartaket finns en öppning för ventilationen som mynnar i en ventilhuv på tegeltaket."}
 
-image_read("~/Pictures/phonepics2018/Photo0305.jpg")
+image_read("~/Pictures/phonepics2018/Photo0305.jpg") %>%
+  image_resize("400x")
 
 ```
 
 Tillräckligt mycket av innertaket monteras bort så att det går att jobba stående (inre takhöjd är ungefär 170 cm). Hålet ut genom väggen syns då tydligt.
 
-```{r  out.width='100%' ,  fig.cap="Stora delar av inre taket har tagits bort. Både syllstocken och golvbjälken är synlig."}
+```{r fig.cap="Stora delar av inre taket har tagits bort. Både syllstocken och golvbjälken är synlig."}
 
-image_read("~/Pictures/phonepics2018/Photo0291.jpg")
+image_read("~/Pictures/phonepics2018/Photo0291.jpg") %>%
+  image_resize("400x")
 
 ```
 
@@ -59,9 +64,10 @@ image_read("~/Pictures/phonepics2018/Photo0291.jpg")
 
 Efter bortmontering av innertaket kan man se syllstocken och dessutom vidare rakt ut genom jordkällarens vägg genom "takfoten". 
 
-```{r  out.width='100%' ,  fig.cap="Som synes är syllstocken i dåligt skick."}
+```{r fig.cap="Som synes är syllstocken i dåligt skick."}
 
-image_read("~/Pictures/phonepics2018/Photo0292.jpg")
+image_read("~/Pictures/phonepics2018/Photo0292.jpg") %>%
+  image_resize("400x")
  
 ```
 
@@ -71,9 +77,10 @@ Man ser också att en spricka har bildats inuti jordkällaren, i hörnet. Den sl
 
 Golvbjälken har påverkats uppifrån av regn och är i riktigt dåligt skick på ena sidan (den sida där taket tidigare varit trasigt under ett antal års tid). 
 
-```{r  out.width='100%' ,  fig.cap="Halva golvbjälken är helt rutten."}
+```{r fig.cap="Halva golvbjälken är helt rutten."}
 
-image_read("~/Pictures/phonepics2018/Photo0295.jpg")
+image_read("~/Pictures/phonepics2018/Photo0295.jpg") %>%
+  image_resize("400x")
 
 ```
 
@@ -83,47 +90,53 @@ Knivtestet visar dock att halva bjälken är i god form och inte påverkad, så 
 
 Först tas de dåliga delarna av syllstocken och golvbjälken bort - med sopskyffel, kofot, såg och ... spade. Materialet bränns.
 
-```{r  out.width='100%' ,  fig.cap="Resterna av syllstocken och golvbjälken."}
+```{r fig.cap="Resterna av syllstocken och golvbjälken."}
 
-image_read("~/Pictures/phonepics2018/Photo0315.jpg")
+image_read("~/Pictures/phonepics2018/Photo0315.jpg") %>%
+  image_resize("400x")
 
 ```
 
 För att täta mellan syllstock och muren används lerbruk. Detta används även för att laga sprickan i hörnet av jordkällaren.
  
-```{r  out.width='100%' ,  fig.cap="Resterna av syllstocken och golvbjälken."}
+```{r fig.cap="Resterna av syllstocken och golvbjälken."}
 
-image_read("~/Pictures/phonepics2018/Photo0318.jpg")
+image_read("~/Pictures/phonepics2018/Photo0318.jpg") %>%
+  image_resize("400x")
 
 ```
 
 Blandningen är lermjöl (1 del) och gammal myrstack (3 delar) samt återvunnen aska (2 delar) och lite vatten. Ett par stenar stora som katthuvuden läggs i frifallsblandaren och sedan får den köra tjugo minuter. Det blev en spann med bruk. Den nya syllstocken läggs sedan in infrån på en tunn bädd gjord av detta lerbruk. Först måste takbjälkar och takstolar lyftas med domkraft.
 
-```{r  out.width='100%' ,  fig.cap="Golvbjälkar och takstolar lyfts med trästavar och domkraft."}
+```{r fig.cap="Golvbjälkar och takstolar lyfts med trästavar och domkraft."}
 
-image_read("~/Pictures/phonepics2018/Photo0324.jpg")
+image_read("~/Pictures/phonepics2018/Photo0324.jpg") %>%
+  image_resize("400x")
 
 ```
 
 Den nya syllen kommer på plats med hjälp av en stor klubba och kofot.
 
-```{r  out.width='100%' ,  fig.cap="Klubba och kofot används för att få stocken på plats."}
+```{r fig.cap="Klubba och kofot används för att få stocken på plats."}
 
-image_read("~/Pictures/phonepics2018/Photo0325.jpg")
+image_read("~/Pictures/phonepics2018/Photo0325.jpg") %>%
+  image_resize("400x")
 
 ```
 
-```{r  out.width='100%' ,  fig.cap="Syllstocken ligger på en bädd av lerbruk."}
+```{r fig.cap="Syllstocken ligger på en bädd av lerbruk."}
 
-image_read("~/Pictures/phonepics2018/Photo0320.jpg")
+image_read("~/Pictures/phonepics2018/Photo0320.jpg") %>%
+  image_resize("400x")
 
 ```
 
 Större delen av lerbruket går åt till att täta sprickan i hörnet. 
 
-```{r  out.width='100%' ,  fig.cap="Hörnsprickan lagad med lerbruk."}
+```{r fig.cap="Hörnsprickan lagad med lerbruk."}
 
-image_read("~/Pictures/phonepics2018/Photo0322.jpg")
+image_read("~/Pictures/phonepics2018/Photo0322.jpg") %>%
+  image_resize("400x")
 
 ```
 
@@ -135,25 +148,28 @@ En skarv av en typ som rekommenderats i timberframing-sammanhang används. Förs
  
 Sedan tillverkas den del som ska skarvas i från nytt timmer. I detta fall används tapp och tapphål som är 3" djupa och 2" breda. Skarven är ca 4x så lång som timrets dimension (5").
 
-```{r  out.width='100%' ,  fig.cap="Den nya delen av bjälken huggs till."}
+```{r fig.cap="Den nya delen av bjälken huggs till."}
 
-image_read("~/Pictures/phonepics2018/Photo0326.jpg")
+image_read("~/Pictures/phonepics2018/Photo0326.jpg") %>%
+  image_resize("400x")
 
 ```
 
 När skarven sätts ihop kommer domkraften in och lyfter upp den iskarvade nyare delen av bjälken underifrån tills bjälken är helt vågrät.
 
-```{r  out.width='100%' ,  fig.cap="Skarven kommer på plats med hjälp av domkraft."}
+```{r fig.cap="Skarven kommer på plats med hjälp av domkraft."}
 
-image_read("~/Pictures/phonepics2018/Photo0327.jpg")
+image_read("~/Pictures/phonepics2018/Photo0327.jpg") %>%
+  image_resize("400x")
 
 ```
 
 Därefter borras dymlingshål och ekdymlingar skärs till - trekvartstum grova - och knackas in. När dessa kommer på plats tas den underifrån stödjande pelaren bort som synes på bilden och ingen nedhängning märks i bjälken.
 
-```{r  out.width='100%' ,  fig.cap="Resterna av syllstocken och golvbjälken."}
+```{r fig.cap="Resterna av syllstocken och golvbjälken."}
 
-image_read("~/Pictures/phonepics2018/Photo0329.jpg")
+image_read("~/Pictures/phonepics2018/Photo0329.jpg") %>%
+  image_resize("400x")
 
 ```
 

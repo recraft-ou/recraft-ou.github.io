@@ -10,7 +10,7 @@ navbar:
     image: images/logo-small.png
     href: https://recraft-ou.github.io
   right:
-    - text: "News"
+    - text: "Posts"
       href: gallery.html
     - text: "About"
       href: posts/2018-10-10-recraft-ou/
