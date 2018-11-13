@@ -12,7 +12,16 @@
       <link>https://recraft.me</link>
     </image>
     <generator>Radix</generator>
-    <lastBuildDate>Thu, 01 Nov 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 11 Nov 2018 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Coordinate Diffusion</title>
+      <dc:creator>recraft@pm.me</dc:creator>
+      <link>https://recraft.me/posts/2018-11-12-diffusion</link>
+      <description>About lowering the resolution of spatial point data</description>
+      <guid>https://recraft.me/posts/2018-11-12-diffusion</guid>
+      <pubDate>Sun, 11 Nov 2018 00:00:00 +0000</pubDate>
+      <media:content url="https://recraft.me/posts/2018-11-12-diffusion/radix-preview.png" medium="image" type="image/png" width="219" height="205"/>
+    </item>
     <item>
       <title>Halloween Repairs</title>
       <dc:creator>recraft@pm.me</dc:creator>

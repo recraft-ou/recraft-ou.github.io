@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2018-11-12-diffusion/",
+    "title": "Coordinate Diffusion",
+    "description": "About lowering the resolution of spatial point data",
+    "author": [
+      {
+        "name": "recraft@pm.me",
+        "url": "https://recraft.me"
+      }
+    ],
+    "date": "2018-11-12",
+    "categories": [],
+    "preview": "posts/2018-11-12-diffusion/radix-preview.png",
+    "last_modified": "2018-11-13T10:21:00+01:00",
+    "preview_width": 219,
+    "preview_height": 205
+  },
+  {
     "path": "posts/2018-11-01-halloween/",
     "title": "Halloween Repairs",
     "description": "Notes from the underground",
