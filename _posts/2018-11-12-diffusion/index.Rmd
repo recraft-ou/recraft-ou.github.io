@@ -1,0 +1,356 @@
+---
+title: "Coordinate Diffusion"
+description: |
+  About lowering the resolution of spatial point data
+author:
+  - name: recraft@pm.me
+    url: https://recraft.me
+    affiliation: Recraft
+    affiliation_url: https://github.com/recraft
+date: "2018-11-12"
+output:
+  radix::radix_article:
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(out.width = "100%")
+
+```
+
+Assume we have a leaflet map published with interactivity on the web, that has coordinate point features on it. Below is a low res screenshot of a website with such a map with bird inventory sites data in Sweden.
+
+```{r preview=TRUE}
+library(magick)
+library(webshot)
+library(rmarkdown)
+
+routes_std <-
+  paste0("http://www.fageltaxering.lu.se/inventera/metoder/",
+  "standardrutter/bokning/bokning.html") 
+
+routes_night <- paste0(
+  "http://www.fageltaxering.lu.se/inventera/metoder/",
+  "nattrutter/bokning/bokning.html") 
+
+tf <- tempfile(fileext = ".png")
+# install_phantomjs()
+ws <- webshot(routes_std, tf)
+
+image_read(tf) %>% 
+image_convert("png") %>% 
+image_resize("x400") %>% 
+image_crop("x205+0+60")
+
+```
+
+# Scraping coordinates
+
+We can create a function to parse the leaflet features into a fairly tidy data frame. Lets look at the first ten rows of such parsed data.
+
+```{r, echo=TRUE}
+
+# for parsing
+library(rvest)
+library(httr)
+library(readr)
+library(jsonlite)
+library(tibble)
+library(dplyr)
+library(stringr)
+
+# for geotransform and visuals
+library(sp)
+library(raster)
+library(raster)
+library(leaflet)
+
+
+parse_leaflet_coords <- function(url) {
+
+  # get page content from url
+  www <- url %>% GET %>% content(as = "text")
+
+  # pick out features data used by leaflet
+  tf <- tempfile()
+  write_lines(www, tf)
+  cmd <- paste("grep -o -e '\"features\":[[]{.*}}[]]'", tf)
+
+  # convert to df
+  json <- fromJSON(paste0("{", system(cmd, intern = TRUE), "}"), 
+    flatten = TRUE)
+
+  unlink(tf)
+  
+  as_tibble(json$features)
+    
+}
+
+# parse leaflet coordinates for the routes_night url
+df <- parse_leaflet_coords(routes_std)
+
+# tidy the data to allow for easier plotting
+p <- 
+  df %>% 
+  mutate(is_booked = ifelse(is.na(str_match(html, "green")), FALSE, TRUE)) %>%
+  mutate(grid_code = str_extract(label, "\\w{5}")) %>%
+  mutate(grid_desc = str_replace(label, "\\w{5}\\s+(\\w+)", "\\1")) %>%
+  mutate(color = ifelse(is_booked, "darkgreen", "white")) %>%
+  dplyr::select(grid_code, grid_desc, popup, lon, lat, is_booked, color) %>%
+  arrange(lon, lat)
+
+paged_table(p %>% dplyr::select(-popup) %>% slice(1:10))
+
+```
+
+# Fitting a grid to the points
+
+We now have the coordinates so we can create spatial points and attempt to find a spatial grid that fits the points given a certain not necessarily modest tolerance for deviations.
+
+```{r points2grid, echo=TRUE, layout="l-screen-inset shaded"}
+
+# leaflet uses EPSG:4326 so we create spatial points based on the data
+# and fit points to a grid
+
+points <- SpatialPointsDataFrame(
+  data.frame(p$lon, p$lat), 
+  data = p, proj4string = CRS("+init=epsg:4326")
+)
+
+gt <- points2grid(points, tolerance = 0.90)
+
+sg <- SpatialGrid(
+  grid = gt, 
+  proj4string = CRS("+init=epsg:4326")
+)
+
+# convert spatial grid to polygons for display in leaflet
+spdf <- as(sg, "SpatialPolygons")
+
+m <-
+  leaflet() %>%  
+  addProviderTiles("Stamen.Watercolor",
+                   options = providerTileOptions(opacity = 0.25)) %>%
+  addPolygons(data = spdf, weight = 1, color = "darkgray") %>%
+  addCircles(lng = points$lon, lat = points$lat, 
+             radius = 1, #stroke = FALSE,
+             color = p$color, 
+             fill = p$color, opacity = 1,
+             popup = p$popup, 
+             label = p$grid_code)
+
+
+m
+
+
+```
+
+Looking at the map we see that points fit the grid well at the bottom but not at the top, where coordinates seems to be more widely space out. We suspect some warped grid would perhaps fit the points even better. Perhaps a standard Swedish grid in another projection has been used? 
+
+We test with the Swedish grid from the "swedishbutterflies" R package.
+
+```{r swedishgrid, echo=TRUE, layout="l-screen-inset shaded"}
+
+# a Swedish grid is available as a raster layer in the swedishbutterflies package
+library(swedishbutterflies)
+
+grid <- sebms_swe_grid
+
+rl <- raster(extent(grid), nrows = 62, ncols = 28, 
+             crs = projection(grid))
+
+gt <- getGridTopology(as(rl, "SpatialGrid"))
+
+sg <- SpatialGrid(
+  grid = gt, 
+  proj4string = projection(grid)
+)
+
+# transform it to spatial polygons in the leaflet default projection
+spdf <- spTransform(as(sg, "SpatialPolygons"), CRS("+init=epsg:4326"))
+
+# inspect results when plotting the points and the standard swedish grid
+m <-
+  leaflet() %>%  
+  addProviderTiles("Stamen.Watercolor",
+                   options = providerTileOptions(opacity = 0.25)) %>%
+  addPolygons(data = spdf, weight = 1, color = "darkgray") %>%
+  addCircles(lng = points$lon, lat = points$lat, 
+             radius = 1, #stroke = FALSE,
+             color = p$color, 
+             fill = p$color, opacity = 1,
+             popup = p$popup, 
+             label = p$grid_code)
+
+
+m
+```
+
+We can confirm visually in the plot that grid cell centroid coords match the points well.
+
+# Diffusing coordinates
+
+Now let's say we have positions that we want to publish but at a lower resolution - ie diffused - in order to make it more difficult to reengineer site data that may be protected or sensitive. In other words we want to do a lossy tranformation on the coordinate data where we snap it to cell centroid coordinates of a lower resolution grid. 
+
+Depending on how coarse the lower resolution grid is, duplicated coordinates will be more frequent than in the original point data. The lower the resolution, the more overlaps, so we may also need some kind of optional jitter to make it easier to visually distinguish between positions that overlap after the transformation but that originally did not overlap.
+
+## Diffusion function
+
+Here is an example of a function that take spatial points and return diffused spatial points.
+
+
+```{r diffuse, echo=TRUE, layout="l-screen-inset shaded"}
+
+library(raster)
+library(sp)
+library(leaflet)  
+library(mapview)
+library(swedishbutterflies)
+
+#' Diffuse spatial points in order to obscure exact positions.
+#' 
+#' This function is intended to diffuse spatial points using a lossy transformation, 
+#' where coordinate positions are changed, snapping to the centroid point of a coarser grid 
+#' and then jittering positions to avoid overlap. If no grid is specified, a grid will 
+#' be calculated from the point data.
+#'  
+#' @param points SpatialPoints object with the coordinates 
+#' @param grid SpatialGrid object with the coarser grid to snap the points to
+#' @param use_swe_grid logical defaulting to TRUE indicating that if the grid parameter is missing, a specific Swedish grid is used for aggregate points
+#' @param jitter logical defaulting to TRUE indicating that new positions should be jittered to avoid overlaps
+#' @importFrom raster extent projection dplyr
+#' @importFrom sp points2grid over CRS
+#' @export
+
+diffuse <- function(points, grid, use_swe_grid = TRUE, jitter = TRUE) {
+  
+  if (missing(grid)) {
+    if (use_swe_grid) {
+      grid <- as(raster(extent(sebms_swe_grid), 
+        nrows = 62, ncols = 28, 
+        crs = projection(sebms_swe_grid)), "SpatialGrid")
+    } else {
+      grid <- SpatialGrid(
+        points2grid(points, tolerance = 0.7),
+        proj4string = CRS(proj4string(points))
+      )
+    }
+  } 
+  
+  idx <- over(points, grid)
+  
+  new_coords <- as.data.frame(coordinates(grid)[idx, ])
+  
+  if (jitter) {
+    dx <- jitter(new_coords$s1)
+    dy <- jitter(new_coords$s2)
+    new_coords <- data.frame(lon = dx, lat = dy)
+  }
+  
+  diffused_points <- SpatialPoints(
+    coords = new_coords, 
+    proj4string = CRS(proj4string(points))
+  )
+  
+  return (diffused_points)
+  
+}
+
+```
+
+Many things can be improved when it comes to the implementation of this function but are omitted for simplicity and readability. For example, documentation of the function with more usage examples, argument checking, jittering parameters and tolerance levels for the auto-gridding, error handling etc. 
+
+But let's skip those details for now and instead see how the function can be used to diffuse point data.
+
+# Diffusing real point data
+
+Let's see how this function can be used.
+
+To do this, first we need some example point data and we can start from a data frame with two columns of longitude and latitude coordinates and add some info on the coordinate reference system used for the coordinates. 
+
+In Sweden, coordinates are traditionally often specified using formats known as RT38, RT90 and SWEREF99 with various variations.
+
+
+```{r swe-gcs}
+library(readr)
+swe_gcs <- read_delim(delim = " ", 
+file = "EPSG Abbrev GCS
+3028 RT38_0_gon RT38
+3029 RT38_25_gon_O RT38
+3027 RT38_25_gon_V RT38
+3030 RT38_5_gon_O RT38
+3026 RT38_5_gon_V RT38
+3025 RT38_75_gon_V RT38
+3022 RT90_0_gon RT90
+3023 RT90_25_gon_O RT90
+3021 RT90_25_gon_V RT90
+3024 RT90_5_gon_O RT90
+3020 RT90_5_gon_V RT90
+3019 RT90_75_gon_V RT90
+3007 SWEREF99_12_00 SWEREF99
+3008 SWEREF99_13_30 SWEREF99
+3012 SWEREF99_14_15 SWEREF99
+3009 SWEREF99_15_00 SWEREF99
+3013 SWEREF99_15_45 SWEREF99
+3010 SWEREF99_16_30 SWEREF99
+3014 SWEREF99_17_15 SWEREF99
+3011 SWEREF99_18_00 SWEREF99
+3015 SWEREF99_18_45 SWEREF99
+3016 SWEREF99_20_15 SWEREF99
+3017 SWEREF99_21_45 SWEREF99
+3018 SWEREF99_23_15 SWEREF99
+3006 SWEREF99_TM SWEREF99")
+
+paged_table(swe_gcs)
+
+```
+
+Coordinates in our example are assumed to be specified in [RT90 2.5 gon  V (Transverse Mercator)](https://georepository.com/crs_3021/RT90-2-5-gon-V.html) so we need to provide this CRS info so that points can be reprojected for visual display using Leaflet interactive web maps - which use [EPSG:4326](https://epsg.io/4326) by default.
+
+We then proceed to diffuse the data by calling the function without specifying a specific aggregation grid which means a grid will be inferred from the points using a specific tolerance level.
+
+Finally we display the results where results before and after the diffusion filter can be compared and where the inferred grid is displayed too.
+
+```{r diffuse-example-1, echo=TRUE, layout="l-screen-inset shaded"}
+
+# original point data
+original <- SpatialPoints(
+  coords = sebms_data_sites, 
+  proj4string = CRS("+proj=tmerc +lat_0=0 +lon_0=15.80827777777778 +k=1 +x_0=1500000 +y_0=0 +ellps=bessel +units=m +no_defs")
+)
+
+# diffuse the point data accepting fcn parameter defaults
+diffused <- diffuse(original)
+
+# finally display the results (original points, diffused points and the grid)
+m <- 
+  mapview(original, color = "darkgreen", cex = 1) +
+  mapview(diffused, color = "darkred", cex = 1) +
+  mapview(sebms_swe_grid, color = "gray")
+
+m
+
+```
+
+If we want to provide a custom aggregation grid that is more coarse we can do so.
+
+```{r diffuse-example-2, echo=TRUE, layout="l-screen-inset shaded"}
+
+coarse_grid <- as(raster(extent(sebms_swe_grid), nrows = 6, ncols = 6, 
+        crs = projection(sebms_swe_grid)), "SpatialGrid")
+
+diffused <- diffuse(original, coarse_grid)
+
+coarse_grid_polys <- as(coarse_grid, "SpatialPolygons")
+
+m <- 
+  mapview(original, color = "darkgreen", cex = 1) +
+  mapview(diffused, color = "darkred", cex = 1) +
+  mapview(coarse_grid_polys, color = "gray")
+
+m
+
+```
+
+When using such a coarse grid, it may be too coarse so that a clustering effect will be noticeable in the diffused point data.
