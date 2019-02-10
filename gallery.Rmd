@@ -2,6 +2,8 @@
 title: "Featured content"
 listing:
   posts:
+    - 2019-02-10-meme-matrix
+    - 2019-02-09-gpu-swarm
     - 2018-11-12-diffusion
     - 2018-11-01-halloween
     - 2018-10-10-recraft-ou

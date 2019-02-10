@@ -39,7 +39,7 @@
   <!--radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","listing"]}},"value":[{"type":"character","attributes":{},"value":["Featured content"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["posts"]}},"value":[{"type":"character","attributes":{},"value":["2018-11-12-diffusion","2018-11-01-halloween","2018-10-10-recraft-ou"]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","listing"]}},"value":[{"type":"character","attributes":{},"value":["Featured content"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["posts"]}},"value":[{"type":"character","attributes":{},"value":["2019-02-10-meme-matrix","2019-02-09-gpu-swarm","2018-11-12-diffusion","2018-11-01-halloween","2018-10-10-recraft-ou"]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -377,9 +377,8 @@
   
   </style>
   
-  <link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet"/>
-  <script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
-  <script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
   <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
   <!--/radix_placeholder_navigation_in_header-->
   <!--radix_placeholder_distill-->
@@ -525,6 +524,10 @@
   /* Tweak code blocks (note that this CSS is repeated above in an injection
      into the d-code shadow dom) */
   
+  d-code {
+    overflow-x: auto !important;
+  }
+  
   pre.d-code code.d-code {
     padding-left: 10px;
     font-size: 12px;
@@ -555,6 +558,11 @@
   }
   
   @media(min-width: 768px) {
+  
+  d-code {
+    overflow-x: visible !important;
+  }
+  
   pre.d-code code.d-code  {
       padding-left: 18px;
       font-size: 14px;
@@ -1355,7 +1363,7 @@
   padding-bottom: 12px;
 }
 .posts-list {
-  margin-top: 24px;
+  margin-top: 60px;
   margin-bottom: 24px;
 }
 
@@ -1489,9 +1497,6 @@
 @media(min-width: 768px) {
   .posts-list .post-preview h2 {
     font-size: 26px;
-  }
-  .posts-list {
-    margin-top: 60px;
   }
   .posts-list .post-preview .thumbnail {
     float: right;
@@ -1645,6 +1650,32 @@ function init_posts_list() {
 <div class="posts-container posts-apply-limit l-page">
 <div class="posts-list">
 <h1 class="posts-list-caption">Featured content</h1>
+<a href="posts/2019-02-10-meme-matrix/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":[]}</script>
+<div class="metadata">
+<div class="publishedDate">Feb. 10, 2019</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2019-02-10-meme-matrix/radix-preview.png"/>
+</div>
+<div class="description">
+<h2>Statswars and Matrices</h2>
+<p>Relational analysis that says more than 25 000 emotional words</p>
+</div>
+</a>
+<a href="posts/2019-02-09-gpu-swarm/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":[]}</script>
+<div class="metadata">
+<div class="publishedDate">Feb. 9, 2019</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2019-02-09-gpu-swarm/radix-preview.png"/>
+</div>
+<div class="description">
+<h2>A Swarm of GPU Sparks</h2>
+<p>About GPU-enabled Docker Swarms</p>
+</div>
+</a>
 <a href="posts/2018-11-12-diffusion/" class="post-preview">
 <script class="post-metadata" type="text/json">{"categories":[]}</script>
 <div class="metadata">

@@ -1,5 +1,39 @@
 [
   {
+    "path": "posts/2019-02-10-meme-matrix/",
+    "title": "Statswars and Matrices",
+    "description": "Relational analysis that says more than 25 000 emotional words",
+    "author": [
+      {
+        "name": "recraft@pm.me",
+        "url": "https://recraft.me"
+      }
+    ],
+    "date": "2019-02-10",
+    "categories": [],
+    "preview": "posts/2019-02-10-meme-matrix/radix-preview.png",
+    "last_modified": "2019-02-10T18:30:21+01:00",
+    "preview_width": 534,
+    "preview_height": 400
+  },
+  {
+    "path": "posts/2019-02-09-gpu-swarm/",
+    "title": "A Swarm of GPU Sparks",
+    "description": "About GPU-enabled Docker Swarms",
+    "author": [
+      {
+        "name": "recraft@pm.me",
+        "url": "https://recraft.me"
+      }
+    ],
+    "date": "2019-02-09",
+    "categories": [],
+    "preview": "posts/2019-02-09-gpu-swarm/radix-preview.png",
+    "last_modified": "2019-02-10T12:36:56+01:00",
+    "preview_width": 265,
+    "preview_height": 400
+  },
+  {
     "path": "posts/2018-11-12-diffusion/",
     "title": "Coordinate Diffusion",
     "description": "About lowering the resolution of spatial point data",

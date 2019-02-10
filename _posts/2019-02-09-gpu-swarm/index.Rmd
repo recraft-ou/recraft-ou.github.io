@@ -1,0 +1,89 @@
+---
+title: "A Swarm of GPU Sparks"
+description: |
+  About GPU-enabled Docker Swarms
+author:
+  - name: recraft@pm.me
+    url: https://recraft.me
+    affiliation: Recraft
+    affiliation_url: https://github.com/recraft
+date: "2019-02-09"
+output:
+  radix::radix_article:
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(out.width = "100%")
+
+```
+
+
+```{r preview=TRUE}
+library(magick)
+
+image_read("http://images.fineartamerica.com/images-medium/blue-robot-with-sparks-garry-gay.jpg") %>% 
+image_convert("png") %>% image_convert(colorspace = "gray") %>%
+image_resize("x400")
+```
+
+Can we set up a Docker Swarm cluster with nodes that can run Spark? 
+
+Yes, here is a nice write-up stepping through [how to run a Docker Swarm-based cluster of Spark nodes](https://medium.com/@aoc/running-spark-on-docker-swarm-777b87b5aa3). 
+
+Note however that this guide does not provide a GPU-enabled Docker Swarm-based cluster running Spark.
+
+## GPU-enabled Swarm
+
+So how can we add GPU capabilities to the nodes? 
+
+Some IaaS-providers provide GPU-enabled environments. For example, using the Amazon Cloud, provision a [deep learning base AMI for Ubuntu](https://aws.amazon.com/marketplace/pp/B077GCZ4GR), like so:
+  
+    docker-machine create --driver amazonec2 --amazonec2-ami=ami-086062166ec8340ac \
+      --amazonec2-open-port 8000 --amazonec2-region eu-west-1 aws-sandbox
+
+This host needs to be updated with `nvidia-docker2` - this guide mentions the procedure  [here](https://medium.com/@kyeongwook.ma/deploy-nvidia-docker-to-docker-swarm-service-in-10-mins-4ba603048e85), summarized like so:
+  
+    docker-machine ssh aws-sandbox
+    sudo apt-get -y install nvidia-docker2
+    docker run --runtime=nvidia --rm nvidia/cuda nvidia-smi
+    
+We then need to configure the nodes to [utilize the GPU](http://cowlet.org/2018/05/21/accessing-gpus-from-a-docker-swarm-service.html) like so:
+
+
+    export GPU_ID=`nvidia-smi -a | grep UUID | awk '{print substr($4,0,12)}'`
+    sudo mkdir -p /etc/systemd/system/docker.service.d
+    cat <<EOF | sudo tee --append /etc/systemd/system/docker.service.d/override.conf
+    [Service]
+    ExecStart=
+    ExecStart=/usr/bin/dockerd -H fdd:// --default-runtime=nvidia --node-generic-resource gpu=${GPU_ID}
+    EOF
+    sudo sed -i '1iswarm-resource = "DOCKER_RESOURCE_GPU"' /etc/nvidia-container-runtime/config.toml
+    sudo systemctl daemon-reload
+    sudo systemctl start docker
+
+More nodes can be bootstrapped and added in the same manner to the swarm.
+
+## Deploying services and stacks
+
+On the swarm, GPU-aware tensorflow services can now be launched. A ten replica strong set of Spark worker nodes could be launched like so:
+  
+    docker service create --generic-resource "gpu=1" --replicas 10 \
+      --name sparkWorker <image_name> \
+      "service ssh start && \
+      /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://<spark_master_ip>:7077\"
+  
+It should now also be possible to define a stack to run on the swarm, using Docker Compose, by providing relevant constraints in a .yml-file similar to what is done here:
+  
+    https://github.com/infsaulo/docker-spark/blob/master/docker-compose.yml
+    https://github.com/aocenas/spark-docker-swarm/blob/master/provision.sh
+
+## Prefer Open Science Grid over Amazon?
+
+It may be that your local computing grid infrastructure supports running GPU-enabled Docker or Singularity containers.
+
+Test for example to use the image provided from Docker Hub named `opensciencegrid/tensorflow-gpu` with your local grid computing IaaS-provider and see how it goes.
+
+The [Open Science Grid](https://opensciencegrid.org/about/introduction/) has some information on [GPU-enabled options](https://support.opensciencegrid.org/support/solutions/articles/12000024676-docker-and-singularity-containers) with information on how to configure GPU images including an example of how to [create custom GPU-enabled Dockerfiles](https://github.com/opensciencegrid/osgvo-tensorflow-gpu/blob/master/Dockerfile), available on GitHub.
+

@@ -1,0 +1,205 @@
+---
+title: "Statswars and Matrices"
+description: |
+  Relational analysis that says more than 25 000 emotional words
+author:
+  - name: recraft@pm.me
+    url: https://recraft.me
+    affiliation: Recraft
+    affiliation_url: https://github.com/recraft
+date: "2019-02-10"
+output:
+  radix::radix_article:
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(out.width = "100%")
+
+```
+
+In a short but sweet article that appeared on [r-bloggers](https://www.r-bloggers.com/statswars/), Kieran Healy uses one image to convey 25 000 emotional words about the asymmetric relationships between 5 different user communities in the data science world -  R, Python, STATA, SPSS and SAS communities. A full resolution version of this single compact ["emo matrix" is published at Kieran Healy's blog](https://kieranhealy.org/blog/archives/2019/02/07/statswars/).
+
+```{r preview=TRUE}
+library(magick)
+
+image_read("https://kieranhealy.org/files/misc/package_wars.png") %>% 
+image_convert("png") %>% image_convert(colorspace = "gray") %>%
+image_resize("x400")
+```
+
+How can we create a tabular matrix-like visual like this, filled with images that summarize how a certain community views itself and other communities while also including the opposite perspective - how those other communities views that community from the outside?
+
+## Deconstructing the emo matrix
+
+The data displayed in the emomatrix is "relational data" - data describing a relationship between sets of two communities. For instance: the python community sees the R community in certain way that evokes emotions such as those inspired by a particular image.
+
+We start deconstructing the emo matrix but breaking out the sub images so we can learn more about it.
+
+```{r, echo=TRUE}
+
+library(magick)
+library(purrr)
+
+emomatrix <- 
+  "https://kieranhealy.org/files/misc/package_wars.png" %>%
+  image_read()
+
+imagemagick_geometries <- function() {
+  # assemble ImageMagick geometry strings
+  # data for image regions to crop
+  # :) inspired by TI Extended Basic DATA syntax
+  # http://www.99er.net/files/TI%20Extended%20Basic%20-%20Linked.pdf 
+  widths <- c(400, 400, 300, 278, 278)
+  heights <- c(270, 270, 270, 270, 240)
+  offsets_w <- cumsum(c(266, 400, 440, 350, 300))
+  offsets_h <- cumsum(c(226, 270, 270, 270, 270))
+  paste_plus <- function(x, y) paste0("+", paste(x, y, sep = "+"))
+  paste_x <- function(x, y) paste0(x, "x", y)
+  xy <- outer(offsets_w, offsets_h, paste_plus)
+  wh <- outer(widths, heights, paste_x)
+  whxy <- paste0(wh, xy)
+  dim(whxy) <- c(5, 5)
+  return (whxy)
+}
+
+# sub-images
+five <- c("STATA", "R", "SAS", "Python", "SPSS")
+geoms <- imagemagick_geometries()
+emoimages <- map(geoms, function(x) image_crop(emomatrix, x))
+dim(emoimages) <- c(5, 5)
+colnames(emoimages) <- rownames(emoimages) <- five
+```
+
+We can now inspect a particular relation from both ends. 
+
+For example, how does the R community view the Python community. The image seems to indicate a mostly positive view, with some envy in it?
+
+```{r, echo=TRUE}
+emoimages["R", "Python"][[1]]
+```
+
+From the other end we can see how the Python community views the R community. If you're Homer - wouldn't you like to have and use Homer's Dream Car - it has all the features you would ever need? There is some ambiguity however - or don't you perceive a hint of ridicule being present there?
+
+```{r, echo=TRUE}
+emoimages["Python", "R"][[1]]
+```
+
+Each image says a thousand emotional words in the form of inside jokes - not easy to decode for outsiders to the communities involved, but with a lot of emotional content that can be quickly be deciphered by members inside these communities. 
+
+For an outsider, at this point, we'd have to use the individual images for example with a reverse image search API to locate their origins in order to learn more about a specific view and to try to get to the gist of what a particular image is trying to communicate.
+
+```{r, eval=FALSE, echo=TRUE}
+res <- map(whxy, function(x) image_crop(emomatrix, x) %>% 
+  image_resize("x240") %>% image_write(paste0("statswars-", x, ".png")))
+```
+
+
+## The emotional matrix reconstructed
+
+Here follows an attempt to reproduce this diagram using `DT` which allows us to get a HTML table that can link to images and provide tooltips that add some clarifications.
+
+```{r echo=TRUE}
+
+library(DT)
+library(rvest)
+library(httr)
+library(tibble)
+library(stringr)
+library(dplyr)
+library(readr)
+library(knitr)
+library(kableExtra)
+
+imagedata <- read_delim(delim = ";", trim_ws = TRUE, file = "emo; url
+IBM Business Automation Content Analyzer on Cloud; https://www.bpm.ibmcloud.com/images/baca/card3.jpg
+A Rube Goldberg Machine; https://education.pasco.com/epub/PhysicsNGSS/Images/SB/23/LR/RubeGoldebergMachine.png
+IBM 1800 DACS; http://www.opendragon.ca/Images/001_05_12_0006.jpg
+Tech Bro Says You Just Do Not Understand the Blockchain; https://mondrian.mashable.com/uploads%252Fcard%252Fimage%252F877740%252F87e3e914-63e0-43f1-a53a-5d4cb1b12cc8.jpg%252F950x534__filters%253Aquality%252890%2529.jpg?signature=vin5OtSuozuc6naKbxCh0A85xhU=&source=https%3A%2F%2Fblueprint-api-production.s3.amazonaws.com
+YMCA; https://www.ymcala.org/sites/default/files/styles/node_teaser/public/2017-11/Graduates.jpg?itok=S2kLygK0
+Giphy Monkey Stuff; http://cdn.lowgif.com/full/ba25ae8ed81cebe8-monkey-typing-gifs-tenor.gif
+The Matrix 4 Rebooted; https://fsmedia.imgix.net/25/59/a1/34/315d/495a/9c0c/66b36664c23c/the-matrix6jpg.jpeg?rect=0%2C0%2C1920%2C960&auto=format%2Ccompress&w=650
+SAGE; https://image.slidesharecdn.com/startsmall-staysmall-130829072518-phpapp01/95/start-small-stay-small-4-638.jpg?cb=1377768482
+Distracted Boyfriend; https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fi.imgflip.com%2F1v1xf4.jpg&f=1
+Spongebob and Patrick Are Best Friends Forever; https://static.artfire.com/uploads/images/561/45f/d3b/bee/large/56145fd3bbeea01212bff0e3a516eb506cc7ad63335596adb76006e5bcfd6ed0.jpg
+European Teenage Business Man; https://image.shutterstock.com/image-photo/european-appearance-teenager-boy-business-450w-326683721.jpg
+Avalon - Where Excalibur Gets Forged - Messy Computer Desk; https://c7.alamy.com/comp/A3NY2A/messy-computer-desk-A3NY2A.jpg
+Analytics Dashboard; https://www.rythmos.com/hs-fs/hubfs/BI%20TOOLS%20BLOG.jpg?width=600&name=BI%20TOOLS%20BLOG.jpg
+Tech Bro Says You Just Do Not Understand the Blockchain; https://mondrian.mashable.com/uploads%252Fcard%252Fimage%252F877740%252F87e3e914-63e0-43f1-a53a-5d4cb1b12cc8.jpg%252F950x534__filters%253Aquality%252890%2529.jpg?signature=vin5OtSuozuc6naKbxCh0A85xhU=&source=https%3A%2F%2Fblueprint-api-production.s3.amazonaws.com
+Baby with Laptop Feels Confused; http://image.shutterstock.com/display_pic_with_logo/237994/237994,1315555947,1/stock-photo-baby-with-laptop-confused-84320152.jpg
+I Hate New Excel; https://www.insightsquared.com/wp-content/uploads/2012/04/i-hate-excel.png
+The Homer - Your Dream Car With All Features; https://laughingsquid.com/wp-content/uploads/2014/05/14104880051_92d6e1f922_z.jpg
+Comptometer; https://upload.wikimedia.org/wikipedia/commons/f/ff/Mechanical-Calculator.png
+Tech Bro Says You Just Do Not Understand the Blockchain; https://mondrian.mashable.com/uploads%252Fcard%252Fimage%252F877740%252F87e3e914-63e0-43f1-a53a-5d4cb1b12cc8.jpg%252F950x534__filters%253Aquality%252890%2529.jpg?signature=vin5OtSuozuc6naKbxCh0A85xhU=&source=https%3A%2F%2Fblueprint-api-production.s3.amazonaws.com
+Correct Execution of the Process; https://image.shutterstock.com/image-vector/operator-controlling-correct-execution-process-450w-186044081.jpg
+I Hate Old Excel; https://www.insightsquared.com/wp-content/uploads/2012/04/i-hate-excel.png
+IBM Selective Sequence Electronic Calculator (SSEC)- Electromechanical Computing technology from 1959; https://slideplayer.fr/slide/3696889/12/images/13/1959.jpg
+HAL 900 Eye; http://www.synthstuff.com/mt/archives/2008/Eye_HAL9000.jpg
+African Rock Python; https://upload.wikimedia.org/wikipedia/commons/8/80/Python_sebae_head2a.jpg
+Homework for Schoolkids; https://www.quill.com/is/image/Quill/JV53677_s7?$img400$
+")
+
+# add the from, to relation as well as tooltip data and a link to the image url
+id <- imagedata %>% bind_cols(data_frame(
+    alt = as.vector(outer(five, five, function(x, y) paste0(x, " as seen by ", y))),
+    from = as.vector(outer(five, five, function(x, y) paste0(x))),
+    to = as.vector(outer(five, five, function(x, y) paste0(y)))
+  )) %>%
+  mutate(imgurl = paste0("<a href='", url, "'><img height=52 title='", emo, "' src='", url, "'/></a>"))
+
+id %>% 
+  select(alt, from, to, emo) %>%
+  filter(from == "R", to == "R") %>% 
+  mutate(url = "https://some.imageurl.here/image.png") %>%
+  kable() %>% 
+  kable_styling()
+
+```
+
+With the source data expressed like above - with relationships added (from, to) in addition to the image urls - we can use `tidyr` to spread this tall table of data into a format that is suitable for being visualized with `DT` as a webfriendly table of image thumbnails, where hovering will provide extra info through a tooltip and where clicking leads to the source image.
+
+```{r}
+
+library(tidyr)
+
+res <- id %>% 
+  select(from, to, imgurl) %>% 
+  spread(from, imgurl) %>% 
+  rename(Community = to)
+
+datatable(res, escape = FALSE, rownames = FALSE, filter = 'none', class = "compact",
+          options = list(searching = FALSE, paging = FALSE, ordering = FALSE, info = FALSE,
+                         columnDefs = list(list(className = 'dt-left', targets = 0:5))))
+```
+
+## The meme matrix
+
+These days memes and emojis are increasingly used as the universal esperanto of cross-cultural communication so here is an attempt at a meme matrix involving the R and Python communities.
+
+```{r, echo=TRUE}
+library(gt)
+
+memedata <- read_delim(delim = ";", trim_ws = TRUE, file = "from;to;imgurl
+R;R;https://memegen.link/morpheus/once_you_enter_the_tidyverse_there_is_no_going_back/hadley,_yihui_and_cheng_took_the_red_pill_too.jpg
+Python;R;https://memegen.link/keanu/what_if_purrr,_furrr_and_dplyr/destructures_the_mind~q.jpg
+Python;Python;https://memegen.link/hipster/tech_bro_understands_the_internets/is_pythonista.jpg
+R;Python;https://memegen.link/scc/the_good_python_ds_things_--_pandas,_feather_and_ursa_labs/hadley~q.jpg")
+
+res <- 
+  memedata %>% 
+  mutate(alt = paste0(to, " as seen by ", from)) %>%
+  mutate(html = paste0("<a href='", imgurl, "'><img height=200 title='", alt, "' src='", imgurl, "'/></a>")) %>%
+  select(from, to, html) %>%
+  spread(from, html) %>% 
+  rename(Community = to)
+
+
+datatable(res, escape = FALSE, rownames = FALSE, filter = 'none', class = "compact",
+          options = list(searching = FALSE, paging = FALSE, ordering = FALSE, info = FALSE,
+                         columnDefs = list(list(className = 'dt-left', targets = 0:2))))
+```
+
+SPSS, SAS and STATA communities are intentionally left out as these communites represent users of specific commercial applications rather than users of open source data science languages :) 
+
+  
