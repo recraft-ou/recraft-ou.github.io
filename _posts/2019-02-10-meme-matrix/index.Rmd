@@ -114,7 +114,7 @@ library(kableExtra)
 
 imagedata <- read_delim(delim = ";", trim_ws = TRUE, file = "emo; url
 IBM Business Automation Content Analyzer on Cloud; https://www.bpm.ibmcloud.com/images/baca/card3.jpg
-A Rube Goldberg Machine; https://education.pasco.com/epub/PhysicsNGSS/Images/SB/23/LR/RubeGoldebergMachine.png
+A Rube Goldberg Machine; https://upload.wikimedia.org/wikipedia/commons/a/a9/Rube_Goldberg%27s_%22Self-Operating_Napkin%22_%28cropped%29.gif
 IBM 1800 DACS; http://www.opendragon.ca/Images/001_05_12_0006.jpg
 Tech Bro Says You Just Do Not Understand the Blockchain; https://mondrian.mashable.com/uploads%252Fcard%252Fimage%252F877740%252F87e3e914-63e0-43f1-a53a-5d4cb1b12cc8.jpg%252F950x534__filters%253Aquality%252890%2529.jpg?signature=vin5OtSuozuc6naKbxCh0A85xhU=&source=https%3A%2F%2Fblueprint-api-production.s3.amazonaws.com
 YMCA; https://www.ymcala.org/sites/default/files/styles/node_teaser/public/2017-11/Graduates.jpg?itok=S2kLygK0
@@ -140,13 +140,33 @@ African Rock Python; https://upload.wikimedia.org/wikipedia/commons/8/80/Python_
 Homework for Schoolkids; https://www.quill.com/is/image/Quill/JV53677_s7?$img400$
 ")
 
+# fcn to generate base64 encoded local image linked to external source
+img_uri <- function(url, title) { 
+  
+  x <- tempfile(fileext = ".png")
+  
+  path <- image_read(url) %>% 
+    image_convert(format = "png") %>% 
+    image_resize("64x64^") %>% 
+    image_write(x)
+  message("writing image at ", x, " got return ", path)
+  
+  sprintf('<a href="%s"><img height=64 title="%s" src="%s"/></a>', 
+          url, title, knitr::image_uri(x)) 
+}
+
+
 # add the from, to relation as well as tooltip data and a link to the image url
 id <- imagedata %>% bind_cols(data_frame(
     alt = as.vector(outer(five, five, function(x, y) paste0(x, " as seen by ", y))),
     from = as.vector(outer(five, five, function(x, y) paste0(x))),
     to = as.vector(outer(five, five, function(x, y) paste0(y)))
-  )) %>%
-  mutate(imgurl = paste0("<a href='", url, "'><img height=52 title='", emo, "' src='", url, "'/></a>"))
+  )) #%>%
+#  mutate(img = img_uri(url, emo))
+#  mutate(imgurl = paste0("<a href='", url, "'><img height=52 title='", emo, "' src='", url, #"'/></a>"))
+
+img <- purrr::map2(id$url, id$emo, img_uri)
+id$img <- unlist(img)
 
 id %>% 
   select(alt, from, to, emo) %>%
@@ -164,8 +184,8 @@ With the source data expressed like above - with relationships added (from, to) 
 library(tidyr)
 
 res <- id %>% 
-  select(from, to, imgurl) %>% 
-  spread(from, imgurl) %>% 
+  select(from, to, img) %>% 
+  spread(from, img) %>% 
   rename(Community = to)
 
 datatable(res, escape = FALSE, rownames = FALSE, filter = 'none', class = "compact",
